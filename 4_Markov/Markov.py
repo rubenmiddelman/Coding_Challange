@@ -6,11 +6,15 @@
  # @ Description:
     Midi Markov chain that creates a new midi file based on an old midi file
  """
+
 import mido
 import random
 import numpy as np
 
-midi_File = mido.MidiFile("Fur Elise.mid", clip=True)
+
+def Init_File():
+    midi_File = mido.MidiFile("Fur Elise.mid", clip=True)
+    return midi_File
 
 
 # Reads a MIDI file and adds all the notes to the list
@@ -46,6 +50,7 @@ def Fill_Dict(pairs_Of_Notes):
     return note_Dict
 
 
+# takes the dict and generates a list of new notes
 def Make_List_Of_Notes(dict, full_Note_List, amount_Of_Notes):
     new_Song = []
     note_Num = random.randint(0, len(full_Note_List))
@@ -56,8 +61,23 @@ def Make_List_Of_Notes(dict, full_Note_List, amount_Of_Notes):
     return new_Song
 
 
-note_List = Read_File(midi_File)
+# sets the note list into a midi track
+def Transform_List_To_Midi(new_Notes_List):
+    new_File = mido.MidiFile()
+    new_Track = mido.MidiTrack()
+    new_File.tracks.append(new_Track)
+    for note in new_Notes_List:
+        new_Track.append(mido.Message("program_change", program=12, time=0))
+        new_Track.append(mido.Message("note_on", note=note, velocity=64, time=32))
+        new_Track.append(mido.Message("note_off", note=note, velocity=127, time=100))
+    print("your new song is saved")
+    new_File.save("your_new_song.mid")
+
+
+# run everything
+og_File = Init_File()
+note_List = Read_File(og_File)
 pairs_Of_Notes = Make_Pairs(note_List)
 note_Dict = Fill_Dict(pairs_Of_Notes)
 new_Song = Make_List_Of_Notes(note_Dict, note_List, 40)
-print(new_Song)
+Transform_List_To_Midi(new_Song)
