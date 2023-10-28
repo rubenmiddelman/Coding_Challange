@@ -5,6 +5,7 @@
  # @ Modified time: 2023-10-28 04:59:19
  # @ Description:
     Midi Markov chain that creates a new midi file based on an old midi file
+ # @ TODO: note length, velocity, multi notes at the same time.
  """
 
 import mido
