@@ -6,8 +6,9 @@
  # @ Description:
     Midi Markov chain that creates a new midi file based on an old midi file
  """
-
 import mido
+import random
+import numpy as np
 
 midi_File = mido.MidiFile("Fur Elise.mid", clip=True)
 
@@ -17,23 +18,46 @@ def Read_File(file):
     message_List = []
     for msg in file:
         if msg.type == "note_on":
-            message = [msg.note, msg.velocity]
-            message_List.append(message)
+            message_List.append(msg.note)
     return message_List
 
 
-def Apply_Markov(List_Of_Notes):
-    i = 0
-    multiple_Notes = []
-    for notes in List_Of_Notes:
-        initial_Note = notes[0]
-        for notes_2 in List_Of_Notes:
-            if initial_Note == notes_2[0]:
-                if (i + 1) <= len(List_Of_Notes):
-                    Two_Notes_Togheter = [notes, List_Of_Notes[i + 1]]
-                    multiple_Notes.append(Two_Notes_Togheter)
-            i += 1
-    return multiple_Notes
+# makes pairs for the Markov chain
+def Make_Pairs(list_Of_Notes):
+    list_Of_Pairs = []
+    for i in range(len(list_Of_Notes)):
+        if i < (len(list_Of_Notes) - 1):
+            pair = (
+                list_Of_Notes[i],
+                list_Of_Notes[i + 1],
+            )  # Use tuples for pairs instead of list, this is needed for dictionary
+            list_Of_Pairs.append(pair)
+    return list_Of_Pairs
 
 
-print(Apply_Markov(Read_File(midi_File)))
+# Fills the dictionary with the notes that are assinged with it
+def Fill_Dict(pairs_Of_Notes):
+    note_Dict = {}
+    for note_1, note_2 in pairs_Of_Notes:
+        if note_1 in note_Dict:
+            note_Dict[note_1].append(note_2)
+        else:
+            note_Dict[note_1] = [note_2]
+    return note_Dict
+
+
+def Make_List_Of_Notes(dict, full_Note_List, amount_Of_Notes):
+    new_Song = []
+    note_Num = random.randint(0, len(full_Note_List))
+    first_Note = full_Note_List[note_Num]
+    new_Song.append(first_Note)
+    for i in range(amount_Of_Notes):
+        new_Song.append(np.random.choice(dict[new_Song[-1]]))
+    return new_Song
+
+
+note_List = Read_File(midi_File)
+pairs_Of_Notes = Make_Pairs(note_List)
+note_Dict = Fill_Dict(pairs_Of_Notes)
+new_Song = Make_List_Of_Notes(note_Dict, note_List, 40)
+print(new_Song)
