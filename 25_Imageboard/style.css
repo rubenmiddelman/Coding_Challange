@@ -2,13 +2,22 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4;
 }
 
-header {
-    background-color: #333;
-    color: white;
+.upload-container {
     text-align: center;
-    padding: 1em;
 }
 
-/* Add your styling for image posts, comments, etc. */
+#photo-input {
+    margin-bottom: 10px;
+}
+
+#uploaded-photo {
+    max-width: 100%;
+    margin-top: 20px;
+}

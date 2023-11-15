@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <title>Photo Upload</title>
 </head>
 <body>
-    <script>src = "imageboard.js" </script>
+    <div class="upload-container">
+        <h1>Photo Upload</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="photo" id="photo-input" accept="image/*">
+            <button type="submit">Upload</button>
+        </form>
+        <img id="uploaded-photo" alt="Uploaded Photo">
+        
+        <!-- Add the button to go to the uploads page -->
+        <a href="/uploads"><button>View Uploaded Images</button></a>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>
