@@ -6,3 +6,4 @@ this is my repository of the reddit coding challange of 2023
 10. to do list (in bash)
 15. Chatbot (*technically works)
 18. Image to ascii (*bit buggy)
+25. Imagboard (*not great)
