@@ -4,7 +4,7 @@
  # @ Modified by: Ruben Middelman
  # @ Modified time: 2023-10-30 15:18:29
  # @ Description:
-Small program to convert image to ascii
+Small program to convert image to ascii image is crooked, i dont know why
  """
 
 from PIL import Image
@@ -32,7 +32,7 @@ def image_to_ascii(image_path, width):
             pixel_value // 25
         ]  # Map intensity to ASCII character
 
-        if len(ascii_image) % width == 0:
+        if len(ascii_image) % width - 35 == 0:
             ascii_image += "\n"  # Add newline after each row
     f.write(ascii_image)
 
