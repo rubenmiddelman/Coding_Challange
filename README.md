@@ -7,3 +7,4 @@ this is my repository of the reddit coding challange of 2023
 15. Chatbot (*technically works)
 18. Image to ascii (*bit buggy)
 25. Imagboard (*not great)
+42. IP scanner
